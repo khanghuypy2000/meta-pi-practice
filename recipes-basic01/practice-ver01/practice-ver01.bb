@@ -22,13 +22,20 @@ S = "${WORKDIR}"
 #	export SDKTARGETSYSROOT="../recipe-sysroot"
 #}
 
+do_compile(){
+    ${CC} ${LDFLAGS} hello_world.c -o hello_world.so 
+}
+
 do_install () {
+    install -d ${D}${bindir}
     install -d ${D}${DEMO_INSTALL_DIRECTORY}
     install -d ${D}${DEMO_INSTALL_DIRECTORY}/${BangNguyen_Dir_Root}
     install -m 755 ${WORKDIR}/hello_world.c ${D}${DEMO_INSTALL_DIRECTORY}
     install -m 775 ${WORKDIR}/git/src/main/main.ino ${D}${DEMO_INSTALL_DIRECTORY}/${BangNguyen_Dir_Root}
+    install -m 777 hello_world.so ${D}${bindir}
 }
 
 FILES_${PN} = " \
 	${DEMO_INSTALL_DIRECTORY} \
+    ${bindir} \
 "
